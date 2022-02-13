@@ -1,0 +1,15 @@
+[innovus startup]set init_design_uniquify 1
+setDesignMode -process 180
+suppressMessage TECHLIB 1318[Connect Global Nets]clearGlobalNetsglobalNetConnect VDD -type pgpin -pin VDD -inst *globalNetConnect VDD -type net -net VDDglobalNetConnect VDD -type tiehi -pin VDD -inst *globalNetConnect GND -type pgpin -pin GND -inst *globalNetConnect GND -type net -net GNDglobalNetConnect GND -type tielo -pin GND -inst *globalNetConnect GND -type pgpin -pin VSS -inst *
+
+[CTS Command]
+set_ccopt_property update_io_latency false
+create_ccopt_clock_tree_spec -file CHIP.CCOPT.spec -keep_all_sdc_clocks
+source CHIP.CCOPT.spec
+ccopt_design
+
+[Add PAD Filler]
+addIoFiller -cell PFILL -prefix IOFILLER
+addIoFiller -cell PFILL_9 -prefix IOFILLER
+addIoFiller -cell PFILL_1 -prefix IOFILLER
+addIoFiller -cell PFILL_01 -prefix IOFILLER -fillAnyGap[Area Summary Report]summaryReport -noHtml -outfile summaryReport.rpt
